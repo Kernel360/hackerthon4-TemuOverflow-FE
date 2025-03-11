@@ -1,16 +1,20 @@
-import React from 'react'
-
 interface PaginationProps {
   currentPage: number
   totalPages: number
   handlePageChange: (pageNumber: number) => void
 }
 
-const Pagination: React.FC<PaginationProps> = ({
+const Pagination = ({
   currentPage,
   totalPages,
   handlePageChange
-}) => {
+}: PaginationProps) => {
+  const pageNumbers = []
+
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i)
+  }
+
   return (
     <div className="mt-6 flex justify-center">
       <nav className="inline-flex rounded-md shadow">
@@ -26,32 +30,18 @@ const Pagination: React.FC<PaginationProps> = ({
         </button>
 
         {/* 페이지 번호 버튼 */}
-        {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
-          // 표시할 페이지 번호 계산 (현재 페이지 중심으로 최대 5개)
-          let pageNum
-          if (totalPages <= 5) {
-            pageNum = i + 1
-          } else if (currentPage <= 3) {
-            pageNum = i + 1
-          } else if (currentPage >= totalPages - 2) {
-            pageNum = totalPages - 4 + i
-          } else {
-            pageNum = currentPage - 2 + i
-          }
-
-          return (
-            <button
-              key={pageNum}
-              onClick={() => handlePageChange(pageNum)}
-              className={`relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium ${
-                currentPage === pageNum
-                  ? 'bg-indigo-50 text-indigo-600'
-                  : 'text-gray-700 hover:bg-gray-50'
-              }`}>
-              {pageNum}
-            </button>
-          )
-        })}
+        {pageNumbers.map(pageNum => (
+          <button
+            key={pageNum}
+            onClick={() => handlePageChange(pageNum)}
+            className={`relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium ${
+              currentPage === pageNum
+                ? 'bg-indigo-50 text-indigo-600'
+                : 'text-gray-700 hover:bg-gray-50'
+            }`}>
+            {pageNum}
+          </button>
+        ))}
 
         <button
           onClick={() => handlePageChange(currentPage + 1)}

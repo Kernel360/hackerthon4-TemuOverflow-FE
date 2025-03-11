@@ -22,7 +22,7 @@ const Login = () => {
       // const data = await login(form)
       await login(form)
       //   localStorage.setItem('access_token', data.headers.get('Authorization'))
-      navigate('/posts')
+      navigate('/')
     } catch (err) {
       setError(err instanceof Error ? err.message : '로그인 실패')
     }
