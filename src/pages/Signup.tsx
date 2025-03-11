@@ -69,7 +69,8 @@ const Signup = () => {
 
       const data = await signup(formData) // API 호출
       localStorage.setItem('access_token', data.access_token)
-      navigate('/login')
+      // navigate('/login')
+      navigate('/posts')
     } catch (err) {
       setError(err instanceof Error ? err.message : '알 수 없는 오류')
     }
