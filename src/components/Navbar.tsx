@@ -25,7 +25,7 @@ const Navbar = () => {
           className="flex items-center text-indigo-800 no-underline">
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <img
-              src="/Temuflow-removebg-preview.png" // public 폴더 내 이미지 경로
+              src="/public/Temuflow-removebg-preview.png" // public 폴더 내 이미지 경로
               alt="Temu Overflow Logo"
               className="mr-2 h-10"
             />

@@ -17,12 +17,12 @@ const PostTable: React.FC<PostTableProps> = ({
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-indigo-50">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
+            {/* <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
               번호
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
+            </th> */}
+            {/* <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
               상태
-            </th>
+            </th> */}
             <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
               제목
             </th>
@@ -32,12 +32,12 @@ const PostTable: React.FC<PostTableProps> = ({
             <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
               작성일
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
-              조회
+            {/* <th classname="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
+              조회수
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
-              댓글
-            </th>
+            <th classname="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
+              댓글수
+            </th> */}
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white">
@@ -47,10 +47,10 @@ const PostTable: React.FC<PostTableProps> = ({
                 key={post.id}
                 onClick={() => handlePostClick(post.id)}
                 className="cursor-pointer transition duration-150 hover:bg-indigo-50">
-                <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+                {/* <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
                   {post.id}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                </td> */}
+                {/* <td className="px-6 py-4 whitespace-nowrap">
                   <span
                     className={`inline-flex rounded-full px-2 text-xs leading-5 font-semibold ${
                       post.solved
@@ -59,22 +59,25 @@ const PostTable: React.FC<PostTableProps> = ({
                     }`}>
                     {post.solved ? '해결됨' : '미해결'}
                   </span>
-                </td>
+                </td> */}
                 <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-indigo-900">
                   {post.title}
                 </td>
                 <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-700">
-                  {post.author}
+                  {post.userNickname}
                 </td>
                 <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
-                  {post.date}
+                  {post.createdAt}
                 </td>
-                <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+                {/* <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
                   {post.views}
-                </td>
-                <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
-                  {post.comments}
-                </td>
+                </td> */}
+                {/* <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+                  {post.likeCount}
+                </td> */}
+                {/* <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+                  {post.commentCount}
+                </td> */}
               </tr>
             ))
           ) : (
