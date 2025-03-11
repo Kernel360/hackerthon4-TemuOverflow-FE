@@ -26,12 +26,6 @@ interface Comment {
   updatedAt: string;
 }
 
-interface User {
-  id: number;
-  nickname: string;
-  profileImageUrl: string;
-}
-
 export default function PostDetail() {
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<Post | null>(null);
