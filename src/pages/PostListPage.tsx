@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Post } from '../types/Post'
 import { fetchPosts, PostQueryParams } from '../api/post'
 
-const PostListPage: React.FC = () => {
+const PostListPage = () => {
   const navigate = useNavigate()
   const [posts, setPosts] = useState<Post[]>([])
   const [searchTerm, setSearchTerm] = useState('')
@@ -14,6 +14,21 @@ const PostListPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const postsPerPage = 10
+
+  // 토큰 확인 함수
+  const checkAuth = () => {
+    const token = localStorage.getItem('access_token')
+    if (!token) {
+      // 토큰이 없으면 로그인 페이지로 리디렉션하거나 적절한 처리
+      navigate('/login')
+      console.warn('인증 토큰이 없습니다. 로그인이 필요할 수 있습니다.')
+    }
+  }
+
+  // 컴포넌트 마운트 시 인증 확인
+  useEffect(() => {
+    checkAuth()
+  }, [])
 
   // 데이터 로딩 함수
   const loadPosts = async () => {

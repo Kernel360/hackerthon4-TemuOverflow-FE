@@ -36,10 +36,13 @@ export const signup = async (formData: FormData) => {
     body: formData
   })
 
+  // const token = response.headers.get('Authorization')
+  // if (!response.ok || !token) {
   if (!response.ok) {
     const data = await response.json()
     throw new Error(data.message || '회원가입 실패')
   }
+  // localStorage.setItem('access_token', token)
 
   return response.json()
 }

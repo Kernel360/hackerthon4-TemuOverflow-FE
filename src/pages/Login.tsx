@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-// import { login } from '@/api/auth'
+import { login } from '@/api/auth'
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -19,7 +19,8 @@ const Login = () => {
     setError('')
 
     try {
-      //   const data = await login(form)
+      // const data = await login(form)
+      await login(form)
       //   localStorage.setItem('access_token', data.headers.get('Authorization'))
       navigate('/posts')
     } catch (err) {
