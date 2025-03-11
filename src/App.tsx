@@ -7,6 +7,7 @@ import Navbar from './components/Navbar.tsx'
 // import PostDetailPage from './pages/PostDetailPage';
 // import NewPostPage from './pages/NewPostPage'
 import MainPage from './pages/MainPage'
+import ChatComponent from './pages/ChatComponent.tsx'
 
 const Home = () => (
   //   <h1 className="text-3xl font-bold">Home</h1>
@@ -47,6 +48,10 @@ const App = () => {
         <Route
           path="/post/new"
           element={<PostCreatePage />}
+        />
+        <Route
+          path="/chat"
+          element={<ChatComponent />}
         />
       </Routes>
     </Router>
