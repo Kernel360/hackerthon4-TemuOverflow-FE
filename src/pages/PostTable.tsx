@@ -1,5 +1,5 @@
 import React from 'react'
-import { Post } from '../../types/Post'
+import { Post } from '@/types/Post'
 
 interface PostTableProps {
   posts: Post[]
