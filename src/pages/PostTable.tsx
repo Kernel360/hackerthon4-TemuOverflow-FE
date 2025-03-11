@@ -17,9 +17,9 @@ const PostTable: React.FC<PostTableProps> = ({
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-indigo-50">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
+            {/* <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
               번호
-            </th>
+            </th> */}
             <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
               상태
             </th>
@@ -47,9 +47,9 @@ const PostTable: React.FC<PostTableProps> = ({
                 key={post.id}
                 onClick={() => handlePostClick(post.id)}
                 className="cursor-pointer transition duration-150 hover:bg-indigo-50">
-                <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+                {/* <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
                   {post.id}
-                </td>
+                </td> */}
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span
                     className={`inline-flex rounded-full px-2 text-xs leading-5 font-semibold ${
