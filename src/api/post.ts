@@ -1,4 +1,4 @@
-import { Post } from '../types/Post'
+import { Post } from '@/types/Post'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
@@ -6,7 +6,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 export interface PostQueryParams {
   page: number
   size?: number
-  status?: 'all' | 'solved' | 'unsolved'
+  status?: 'all' | 'solved' | 'unsolved' // TODO isSolved로 변경
   keyword?: string
 }
 
@@ -52,7 +52,7 @@ export const fetchPosts = async (
 
     // API 요청
     const response = await fetch(
-      // `${API_BASE_URL}/article?${queryParams.toString()}`,
+      // `${API_BASE_URL}/article?${queryParams.toString()}`, // TODO query parameter
       `${API_BASE_URL}/api/article`,
       {
         method: 'GET',
