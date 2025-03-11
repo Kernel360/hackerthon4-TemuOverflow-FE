@@ -6,7 +6,7 @@ interface Post {
   title: string;
   content: string;
   likeCount: number;
-  isLiked: boolean;
+  likedByCurrentUser: boolean;
   userId: number;
   userNickname: string;
   userProfileImageUrl: string;
@@ -18,7 +18,7 @@ interface Comment {
   id: number;
   content: string;
   likeCount: number;
-  isLiked: boolean;
+  likedByCurrentUser: boolean;
   userId: number;
   userNickname: string;
   userProfileImageUrl: string;
@@ -36,31 +36,13 @@ export default function PostDetail() {
   const [editingComment, setEditingComment] = useState<number | null>(null);
   const [editContent, setEditContent] = useState<string>("");
   const [isGeneratingAI, setIsGeneratingAI] = useState<boolean>(false); // AI 생성 로딩 상태
-  const [likedPosts, setLikedPosts] = useState<Set<number>>(new Set());
-  const [likedComments, setLikedComments] = useState<Set<number>>(new Set());
   const [currentUserId, setCurrentUserId] = useState<number | null>(null);
+  const [isEditingPost, setIsEditingPost] = useState<boolean>(false);
+  const [editPostTitle, setEditPostTitle] = useState<string>("");
+  const [editPostContent, setEditPostContent] = useState<string>("");
 
   const token = localStorage.getItem("access_token") || "";
   const DEFAULT_PROFILE_IMAGE = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
-
-  // 좋아요 상태 초기화
-  useEffect(() => {
-    const savedLikedPosts = localStorage.getItem('likedPosts');
-    const savedLikedComments = localStorage.getItem('likedComments');
-    
-    if (savedLikedPosts) {
-      setLikedPosts(new Set(JSON.parse(savedLikedPosts)));
-    }
-    if (savedLikedComments) {
-      setLikedComments(new Set(JSON.parse(savedLikedComments)));
-    }
-  }, []);
-
-  // 좋아요 상태 저장
-  const saveLikeStates = (posts: Set<number>, comments: Set<number>) => {
-    localStorage.setItem('likedPosts', JSON.stringify([...posts]));
-    localStorage.setItem('likedComments', JSON.stringify([...comments]));
-  };
 
   // 현재 로그인한 사용자 정보 가져오기
   useEffect(() => {
@@ -215,22 +197,11 @@ export default function PostDetail() {
 
       if (!response.ok) throw new Error("좋아요 요청 실패");
 
-      const newLikedPosts = new Set(likedPosts);
-      const isCurrentlyLiked = newLikedPosts.has(Number(postId));
-
-      if (isCurrentlyLiked) {
-        newLikedPosts.delete(Number(postId));
-      } else {
-        newLikedPosts.add(Number(postId));
-      }
-
-      setLikedPosts(newLikedPosts);
-      saveLikeStates(newLikedPosts, likedComments);
-
       setPost((prev) =>
         prev ? { 
           ...prev, 
-          likeCount: prev.likeCount + (isCurrentlyLiked ? -1 : 1)
+          likeCount: prev.likeCount + (prev.likedByCurrentUser ? -1 : 1),
+          likedByCurrentUser: !prev.likedByCurrentUser
         } : prev
       );
     } catch (error) {
@@ -252,24 +223,13 @@ export default function PostDetail() {
 
       if (!response.ok) throw new Error("좋아요 요청 실패");
 
-      const newLikedComments = new Set(likedComments);
-      const isCurrentlyLiked = newLikedComments.has(commentId);
-
-      if (isCurrentlyLiked) {
-        newLikedComments.delete(commentId);
-      } else {
-        newLikedComments.add(commentId);
-      }
-
-      setLikedComments(newLikedComments);
-      saveLikeStates(likedPosts, newLikedComments);
-
       setComments((prevComments) =>
         prevComments.map((comment) =>
           comment.id === commentId
             ? { 
                 ...comment, 
-                likeCount: comment.likeCount + (isCurrentlyLiked ? -1 : 1)
+                likeCount: comment.likeCount + (comment.likedByCurrentUser ? -1 : 1),
+                likedByCurrentUser: !comment.likedByCurrentUser
               }
             : comment
         )
@@ -297,13 +257,61 @@ export default function PostDetail() {
       const commentWithUserInfo = {
         ...aiComment,
         userNickname: "TemuFlow GPT",
-        userProfileImageUrl: "https://cdn-icons-png.flaticon.com/512/4616/4616734.png",
+        userProfileImageUrl: "/TemuFlow-GPT.png",
       };
       setComments([...comments, commentWithUserInfo]);
     } catch (error) {
       console.error("AI 답변 생성 오류:", error);
     } finally {
       setIsGeneratingAI(false);
+    }
+  }
+
+  // ✅ 게시글 수정 함수
+  async function handleEditPost() {
+    if (!editPostTitle.trim() || !editPostContent.trim()) return;
+
+    try {
+      const response = await fetch(`http://13.125.174.224/api/article/${postId}`, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: editPostTitle,
+          content: editPostContent,
+        }),
+      });
+
+      if (!response.ok) throw new Error("게시글을 수정할 수 없습니다.");
+
+      const updatedPost = await response.json();
+      setPost(updatedPost);
+      setIsEditingPost(false);
+    } catch (error) {
+      console.error("게시글 수정 오류:", error);
+    }
+  }
+
+  // ✅ 게시글 삭제 함수
+  async function handleDeletePost() {
+    if (!window.confirm("정말 삭제하시겠습니까?")) return;
+
+    try {
+      const response = await fetch(`http://13.125.174.224/api/article/${postId}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) throw new Error("게시글을 삭제할 수 없습니다.");
+
+      // 삭제 성공 시 목록 페이지로 이동
+      window.location.href = "/";
+    } catch (error) {
+      console.error("게시글 삭제 오류:", error);
     }
   }
 
@@ -324,26 +332,80 @@ export default function PostDetail() {
             target.src = DEFAULT_PROFILE_IMAGE;
           }}
         />
-        <div>
+        <div className="flex-1">
           <p className="text-lg font-semibold">{post.userNickname || "Unknown User"}</p>
           <p className="text-sm text-gray-500">
             {new Date(post.createdAt).toLocaleString('ko-KR')}
           </p>
         </div>
+        {currentUserId === post.userId && (
+          <div className="flex gap-2">
+            <button
+              onClick={() => {
+                setIsEditingPost(true);
+                setEditPostTitle(post.title);
+                setEditPostContent(post.content);
+              }}
+              className="px-4 py-2 text-blue-500 hover:text-blue-600 transition-colors"
+            >
+              수정
+            </button>
+            <button
+              onClick={handleDeletePost}
+              className="px-4 py-2 text-red-500 hover:text-red-600 transition-colors"
+            >
+              삭제
+            </button>
+          </div>
+        )}
       </div>
 
-      <h1 className="text-3xl font-bold text-indigo-600 mt-6">{post.title}</h1>
-      <p className="mt-4 text-gray-700 text-lg leading-relaxed whitespace-pre-wrap">{post.content}</p>
+      {isEditingPost ? (
+        <div className="mt-6">
+          <input
+            type="text"
+            className="w-full p-3 text-3xl font-bold border rounded-lg mb-4 focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none"
+            value={editPostTitle}
+            onChange={(e) => setEditPostTitle(e.target.value)}
+            placeholder="제목을 입력하세요"
+          />
+          <textarea
+            className="w-full p-3 min-h-[200px] text-lg border rounded-lg mb-4 focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none"
+            value={editPostContent}
+            onChange={(e) => setEditPostContent(e.target.value)}
+            placeholder="내용을 입력하세요"
+          />
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => setIsEditingPost(false)}
+              className="px-6 py-2 text-gray-500 hover:text-gray-600 transition-colors"
+            >
+              취소
+            </button>
+            <button
+              onClick={handleEditPost}
+              className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+            >
+              수정 완료
+            </button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <h1 className="text-3xl font-bold text-indigo-600 mt-6">{post.title}</h1>
+          <p className="mt-4 text-gray-700 text-lg leading-relaxed whitespace-pre-wrap">{post.content}</p>
+        </>
+      )}
 
       <button 
         onClick={handleLikePost} 
         className={`mt-6 px-6 py-2 bg-gradient-to-r ${
-          likedPosts.has(Number(postId))
+          post.likedByCurrentUser
             ? 'from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600' 
             : 'from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600'
         } text-white rounded-full transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center gap-2 text-lg`}
       >
-        <span className="text-2xl">{likedPosts.has(Number(postId)) ? '❤️' : '🤍'}</span> {post.likeCount}
+        <span className="text-2xl">{post.likedByCurrentUser ? '❤️' : '🤍'}</span> {post.likeCount}
       </button>
 
       {/* 📌 댓글 섹션 */}
@@ -382,12 +444,12 @@ export default function PostDetail() {
                   <button 
                     onClick={() => handleLikeComment(comment.id)} 
                     className={`ml-auto px-3 py-1 bg-gradient-to-r ${
-                      likedComments.has(comment.id)
+                      comment.likedByCurrentUser
                         ? 'from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600' 
                         : 'from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600'
                     } text-white rounded-full transition-all duration-200 transform hover:scale-105 flex items-center gap-1`}
                   >
-                    <span>{likedComments.has(comment.id) ? '❤️' : '🤍'}</span> {comment.likeCount}
+                    <span>{comment.likedByCurrentUser ? '❤️' : '🤍'}</span> {comment.likeCount}
                   </button>
                 </div>
 
