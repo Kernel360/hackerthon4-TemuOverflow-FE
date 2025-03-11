@@ -9,6 +9,7 @@ import PostPage from "./pages/PostPage";
 // import NewPostPage from './pages/NewPostPage'
 import MainPage from './pages/MainPage'
 import ChatComponent from './pages/ChatComponent.tsx'
+import TodayError from './pages/TodayError.tsx'
 
 const Home = () => (
   //   <h1 className="text-3xl font-bold">Home</h1>
@@ -58,6 +59,11 @@ const App = () => {
           path="/chat"
           element={<ChatComponent />}
         />
+        <Route
+          path="/todayError"
+          element={<TodayError />}
+        />
+
       </Routes>
     </Router>
   )
