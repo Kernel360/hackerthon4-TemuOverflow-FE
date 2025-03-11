@@ -12,6 +12,7 @@ import {
 } from '@mui/material'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
+
 // 커스텀 스타일 컴포넌트
 const HeroSection = styled(Box)(({ theme }) => ({
   backgroundColor: '#f2f6fb', // indigo-50
@@ -70,17 +71,20 @@ function MainPage() {
                 해결하세요.
               </Typography>
               <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  sx={{
-                    backgroundColor: '#5c6bc0', // indigo-600
-                    '&:hover': { backgroundColor: '#5661ac' /* indigo-700 */ },
-                    px: 4,
-                    py: 1.5
-                  }}>
-                  Get Started
-                </Button>
+              <Button
+  variant="contained"
+  size="large"
+  onClick={() => (window.location.href = "/posts")}
+  sx={{
+    backgroundColor: "#5c6bc0", // indigo-600
+    "&:hover": { backgroundColor: "#5661ac" /* indigo-700 */ },
+    px: 4,
+    py: 1.5
+  }}
+>
+  Get Started
+</Button>
+
                 <Button
                   variant="outlined"
                   size="large"
@@ -203,14 +207,16 @@ function MainPage() {
                   </Typography>
                 </CardContent>
                 <Box sx={{ p: 2 }}>
-                  <Button
-                    endIcon={<ArrowForwardIcon />}
-                    sx={{
-                      color: '#e18056', // tumbleweed-400
-                      '&:hover': { color: '#da6035' /* tumbleweed-500 */ }
-                    }}>
-                    게시판 가기
-                  </Button>
+                <Button
+                endIcon={<ArrowForwardIcon />}
+                onClick={() => (window.location.href = "/posts")}
+                sx={{
+                  color: "#e18056", // tumbleweed-400
+                  "&:hover": { color: "#da6035" /* tumbleweed-500 */ }
+                }}
+              >
+                게시판 가기
+                </Button>
                 </Box>
               </FeatureCard>
             </Grid>
@@ -269,14 +275,16 @@ function MainPage() {
                   </Typography>
                 </CardContent>
                 <Box sx={{ p: 2 }}>
-                  <Button
+                    <Button
                     endIcon={<ArrowForwardIcon />}
+                    onClick={() => (window.location.href = "/chat")}
                     sx={{
-                      color: '#e18056', // tumbleweed-400
-                      '&:hover': { color: '#da6035' /* tumbleweed-500 */ }
-                    }}>
+                      color: "#e18056", // tumbleweed-400
+                      "&:hover": { color: "#da6035" /* tumbleweed-500 */ }
+                    }}
+                  >
                     AI 챗봇 시작하기
-                  </Button>
+                    </Button>
                 </Box>
               </FeatureCard>
             </Grid>
@@ -334,14 +342,16 @@ function MainPage() {
                   </Typography>
                 </CardContent>
                 <Box sx={{ p: 2 }}>
-                  <Button
-                    endIcon={<ArrowForwardIcon />}
-                    sx={{
-                      color: '#e18056', // tumbleweed-400
-                      '&:hover': { color: '#da6035' /* tumbleweed-500 */ }
-                    }}>
-                    더 알아보기
-                  </Button>
+                <Button
+                endIcon={<ArrowForwardIcon />}
+                onClick={() => (window.location.href = "/todayError")}
+                sx={{
+                  color: "#e18056", // tumbleweed-400
+                  "&:hover": { color: "#da6035" /* tumbleweed-500 */ }
+                }}
+              >
+                더 알아보기
+                </Button>
                 </Box>
               </FeatureCard>
             </Grid>
@@ -357,50 +367,7 @@ function MainPage() {
           borderTop: '1px solid #f9e8db', // tumbleweed-100
           borderBottom: '1px solid #f9e8db' // tumbleweed-100
         }}>
-        <Container maxWidth="md">
-          <Box
-            sx={{
-              backgroundColor: '#252941', // indigo-950
-              borderRadius: 4,
-              p: { xs: 4, md: 6 },
-              textAlign: 'center'
-            }}>
-            <Typography
-              variant="h3"
-              component="h2"
-              gutterBottom
-              sx={{
-                fontWeight: 'bold',
-                color: 'white'
-              }}>
-              Ready to Get Started?
-            </Typography>
-            <Typography
-              variant="h6"
-              paragraph
-              sx={{
-                color: '#b7cbea', // indigo-300
-                mb: 4,
-                maxWidth: 600,
-                mx: 'auto'
-              }}>
-              Join thousands of satisfied customers who have transformed their
-              digital experience.
-            </Typography>
-            <Button
-              variant="contained"
-              size="large"
-              sx={{
-                backgroundColor: '#da6035', // tumbleweed-500
-                '&:hover': { backgroundColor: '#cc492a' /* tumbleweed-600 */ },
-                px: 5,
-                py: 1.5,
-                fontSize: '1.1rem'
-              }}>
-              Get Started Now
-            </Button>
-          </Box>
-        </Container>
+        
       </Box>
 
       {/* 푸터 */}
@@ -408,8 +375,8 @@ function MainPage() {
         component="footer"
         sx={{
           py: 6,
-          backgroundColor: '#f2f6fb', // indigo-50
-          borderTop: '1px solid #e6eff9' // indigo-100
+          backgroundColor: '#f2f6fb',
+          borderTop: '1px solid #e6eff9'
         }}>
         <Container maxWidth="lg">
           <Grid
@@ -421,13 +388,13 @@ function MainPage() {
               md={4}>
               <Typography
                 variant="h6"
-                sx={{ fontWeight: 'bold', color: '#48528b' /* indigo-800 */ }}>
-                Brand Logo
+                sx={{ fontWeight: 'bold', color: '#48528b' }}>
+                TemuOverflow
               </Typography>
               <Typography
                 variant="body2"
-                sx={{ mt: 2, color: '#3f4770' /* indigo-900 */ }}>
-                Creating innovative solutions since 2023.
+                sx={{ mt: 2, color: '#3f4770' }}>
+                개발자들의 에러 해결을 돕는 플랫폼
               </Typography>
             </Grid>
             <Grid
@@ -437,49 +404,71 @@ function MainPage() {
               <Grid
                 container
                 spacing={2}>
-                {['Products', 'Features', 'Resources', 'Company', 'Legal'].map(
-                  section => (
-                    <Grid
-                      item
-                      xs={6}
-                      sm={4}
-                      md={2}
-                      key={section}>
-                      <Typography
-                        variant="subtitle1"
-                        sx={{
-                          fontWeight: 'bold',
-                          color: '#48528b' /* indigo-800 */
-                        }}>
-                        {section}
-                      </Typography>
-                      <Box
-                        component="ul"
-                        sx={{ p: 0, mt: 1, listStyle: 'none' }}>
-                        {[1, 2, 3].map(item => (
-                          <Box
-                            component="li"
-                            key={item}
-                            sx={{ mt: 0.5 }}>
-                            <Typography
-                              component="a"
-                              href="#"
-                              variant="body2"
-                              sx={{
-                                color: '#5661ac', // indigo-700
-                                textDecoration: 'none',
-                                '&:hover': {
-                                  color: '#da6035' /* tumbleweed-500 */
-                                }
-                              }}>
-                              Link {item}
-                            </Typography>
-                          </Box>
-                        ))}
-                      </Box>
-                    </Grid>
-                  )
-                )}
+                {[
+                  {
+                    title: '서비스',
+                    links: ['에러 게시판', 'AI 챗봇', '오늘의 에러']
+                  },
+                  {
+                    title: '개발자 가이드',
+                    links: ['API 문서', '개발 가이드', '기술 스택']
+                  },
+                  {
+                    title: '커뮤니티',
+                    links: ['개발자 포럼', '스터디 그룹', '멘토링']
+                  },
+                  {
+                    title: '고객지원',
+                    links: ['문의하기', '피드백', '공지사항']
+                  },
+                  {
+                    title: '회사정보',
+                    links: ['팀 소개', '채용정보', '연락처']
+                  }
+                ].map(section => (
+                  <Grid
+                    item
+                    xs={6}
+                    sm={4}
+                    md={2}
+                    key={section.title}>
+                    <Typography
+                      variant="subtitle1"
+                      sx={{
+                        fontWeight: 'bold',
+                        color: '#48528b',
+                        fontSize: '0.9rem'
+                      }}>
+                      {section.title}
+                    </Typography>
+                    <Box
+                      component="ul"
+                      sx={{ p: 0, mt: 1, listStyle: 'none' }}>
+                      {section.links.map(link => (
+                        <Box
+                          component="li"
+                          key={link}
+                          sx={{ mt: 0.5 }}>
+                          <Typography
+                            component="a"
+                            href="#"
+                            variant="body2"
+                            sx={{
+                              color: '#5661ac',
+                              textDecoration: 'none',
+                              fontSize: '0.85rem',
+                              '&:hover': {
+                                color: '#da6035',
+                                textDecoration: 'underline'
+                              }
+                            }}>
+                            {link}
+                          </Typography>
+                        </Box>
+                      ))}
+                    </Box>
+                  </Grid>
+                ))}
               </Grid>
             </Grid>
           </Grid>
@@ -487,10 +476,11 @@ function MainPage() {
             variant="body2"
             sx={{
               mt: 6,
-              color: '#3f4770' /* indigo-900 */,
-              textAlign: 'center'
+              color: '#3f4770',
+              textAlign: 'center',
+              fontSize: '0.8rem'
             }}>
-            © 2023 Your Company. All rights reserved.
+            © 2023 TemuOverflow. All rights reserved.
           </Typography>
         </Container>
       </Box>
