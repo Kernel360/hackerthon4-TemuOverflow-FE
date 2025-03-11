@@ -4,6 +4,7 @@ import Login from './pages/Login'
 import PostListPage from './pages/PostListPage.tsx'
 import PostCreatePage from './pages/PostCreatePage.tsx'
 import Navbar from './components/Navbar.tsx'
+import PostPage from "./pages/PostPage";
 // import PostDetailPage from './pages/PostDetailPage';
 // import NewPostPage from './pages/NewPostPage'
 import MainPage from './pages/MainPage'
@@ -41,6 +42,10 @@ const App = () => {
         <Route
           path="/posts"
           element={<PostListPage />}
+        />
+        <Route
+          path="/post/:postId"
+          element={<PostPage />} 
         />
         {/* 추후 구현할 다른 라우트들 */}
         {/* <Route path="/posts/:id" element={<PostDetailPage />} /> */}
