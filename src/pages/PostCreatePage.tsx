@@ -1,4 +1,3 @@
-import React from 'react'
 import PostCreateForm from '../components/PostCreateForm'
 
 const PostCreatePage = () => {

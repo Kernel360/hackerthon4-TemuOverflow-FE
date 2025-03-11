@@ -67,7 +67,8 @@ const Signup = () => {
         console.log(key, value)
       }
 
-      const data = await signup(formData) // API 호출
+      // const data = await signup(formData) // API 호출
+      await signup(formData) // API 호출
       // localStorage.setItem('access_token', data.access_token)
       // navigate('/login')
       navigate('/posts')
