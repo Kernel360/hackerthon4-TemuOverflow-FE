@@ -20,8 +20,10 @@ const Login = () => {
 
     try {
       const data = await login(form)
-      localStorage.setItem('access_token', data.access_token)
-      navigate('/')
+      localStorage.setItem('access_token', data.headers.get('Authorization'))
+      console.log('data', data.headers)
+      console.log('access', data.headers.get('Authorization'))
+      navigate('/posts')
     } catch (err) {
       setError(err instanceof Error ? err.message : '로그인 실패')
     }

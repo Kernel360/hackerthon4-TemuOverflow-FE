@@ -1,11 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
-import PostListPage from './pages/PostListPage'
+import PostListPage from './pages/PostListPage.tsx'
+// import PostDetailPage from './pages/PostDetailPage';
+// import NewPostPage from './pages/NewPostPage';
 
 const Home = () => (
   <div className="flex h-screen items-center justify-center">
-    <h1 className="text-3xl font-bold">홈 페이지</h1>
+    <h1 className="text-3xl font-bold">Home</h1>
   </div>
 )
 
