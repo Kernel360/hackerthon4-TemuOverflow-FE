@@ -53,7 +53,7 @@ export const fetchPosts = async (
 
     // API 요청
     const response = await fetch(
-      `${API_BASE_URL}/api/article/page?${queryParams.toString()}`,
+      `${API_BASE_URL}/api/article?${queryParams.toString()}`,
       {
         method: 'GET',
         headers: createAuthHeader()
