@@ -40,7 +40,8 @@ export const fetchPosts = async (
   try {
     // URL 파라미터 구성
     const queryParams = new URLSearchParams()
-    queryParams.append('page', params.page.toString())
+    // queryParams.append('page', (params.page - 1).toString()) // API는 0-based index 사용
+    queryParams.append('page', params.page.toString()) // API는 0-based index 사용
     if (params.size) queryParams.append('size', params.size.toString())
     if (params.keyword) queryParams.append('keyword', params.keyword)
     if (params.status && params.status !== 'all') {
@@ -52,8 +53,7 @@ export const fetchPosts = async (
 
     // API 요청
     const response = await fetch(
-      // `${API_BASE_URL}/article?${queryParams.toString()}`, // TODO query parameter
-      `${API_BASE_URL}/api/article`,
+      `${API_BASE_URL}/api/article?${queryParams.toString()}`,
       {
         method: 'GET',
         headers: createAuthHeader()
@@ -66,25 +66,6 @@ export const fetchPosts = async (
 
     const data = await response.json()
 
-    // 받은 데이터가 배열 형태로 변경되었으므로 그에 맞게 데이터 변환
-    if (Array.isArray(data)) {
-      // 배열 형태의 응답을 적절히 처리
-      const transformedPosts = data.map(item => ({
-        id: item.id,
-        title: item.title,
-        content: item.content,
-        author: item.userId.toString(), // 사용자 ID를 author로 사용
-        date: new Date(item.createdAt).toLocaleDateString(),
-        views: 0, // API에서 제공하지 않으므로 기본값 사용
-        comments: 0, // API에서 제공하지 않으므로 기본값 사용
-        solved: item.isSolved
-      }))
-      return {
-        posts: transformedPosts,
-        totalPages: 1, // 페이지 정보가 없으므로 기본값 설정
-        totalElements: data.length
-      }
-    }
     return {
       posts: data.content || [],
       totalPages: data.totalPages || 1,
@@ -99,7 +80,7 @@ export const fetchPosts = async (
 // 게시글 상세 조회 API
 export const fetchPostById = async (postId: number): Promise<Post> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/article/${postId}`, {
+    const response = await fetch(`${API_BASE_URL}/api/article/${postId}`, {
       method: 'GET',
       headers: createAuthHeader()
     })
