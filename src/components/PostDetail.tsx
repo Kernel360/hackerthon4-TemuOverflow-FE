@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 interface Post {
   id: number;
@@ -370,10 +373,13 @@ export default function PostDetail() {
             placeholder="제목을 입력하세요"
           />
           <textarea
-            className="w-full p-3 min-h-[200px] text-lg border rounded-lg mb-4 focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none"
+            className="w-full p-3 min-h-[200px] text-lg border rounded-lg mb-4 focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 outline-none font-mono"
             value={editPostContent}
             onChange={(e) => setEditPostContent(e.target.value)}
-            placeholder="내용을 입력하세요"
+            placeholder="내용을 입력하세요. 코드 블록을 사용하려면 ```로 감싸주세요. 예시:
+```javascript
+console.log('Hello World');
+```"
           />
           <div className="flex justify-end gap-2">
             <button
@@ -393,7 +399,31 @@ export default function PostDetail() {
       ) : (
         <>
           <h1 className="text-3xl font-bold text-indigo-600 mt-6">{post.title}</h1>
-          <p className="mt-4 text-gray-700 text-lg leading-relaxed whitespace-pre-wrap">{post.content}</p>
+          <div className="mt-4 text-gray-700 text-lg leading-relaxed">
+            <ReactMarkdown
+              components={{
+                code: (props: any) => {
+                  const { inline, className, children } = props;
+                  const match = /language-(\w+)/.exec(className || '');
+                  return !inline && match ? (
+                    <SyntaxHighlighter
+                      style={vscDarkPlus}
+                      language={match[1]}
+                      PreTag="div"
+                    >
+                      {String(children).replace(/\n$/, '')}
+                    </SyntaxHighlighter>
+                  ) : (
+                    <code className={className}>
+                      {children}
+                    </code>
+                  );
+                }
+              }}
+            >
+              {post.content}
+            </ReactMarkdown>
+          </div>
         </>
       )}
 
