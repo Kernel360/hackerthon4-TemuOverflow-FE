@@ -32,12 +32,12 @@ const PostTable: React.FC<PostTableProps> = ({
             <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
               작성일
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
-              조회
+            {/* <th classname="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
+              조회수
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
-              댓글
-            </th>
+            <th classname="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
+              댓글수
+            </th> */}
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white">
@@ -64,17 +64,20 @@ const PostTable: React.FC<PostTableProps> = ({
                   {post.title}
                 </td>
                 <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-700">
-                  {post.author}
+                  {post.userNickname}
                 </td>
                 <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
-                  {post.date}
+                  {post.createdAt}
                 </td>
-                <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+                {/* <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
                   {post.views}
-                </td>
-                <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
-                  {post.comments}
-                </td>
+                </td> */}
+                {/* <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+                  {post.likeCount}
+                </td> */}
+                {/* <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+                  {post.commentCount}
+                </td> */}
               </tr>
             ))
           ) : (

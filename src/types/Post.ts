@@ -1,11 +1,11 @@
-// import { Post } from '../types/Post'
-
 export interface Post {
   id: number
+  userId: number
+  userNickname: string
+  userProfileImageUrl: string
   title: string
-  author: string
-  date: string
-  solved: boolean
-  views: number
-  comments: number
+  content: string
+  createdAt: string
+  updatedAt: string
+  likeCount: number
 }
