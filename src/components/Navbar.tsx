@@ -1,26 +1,19 @@
-// src/components/Navbar.tsx
-import React from 'react'
 import { Link } from 'react-router-dom'
 import { Box, Typography } from '@mui/material'
-import './Navbar.css'
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
+    <nav className="bg-white shadow-md">
+      <div className="container mx-auto flex items-center justify-between p-4">
         <Link
           to="/"
-          className="navbar-logo"
-          style={{ textDecoration: 'none' }}>
+          className="flex items-center text-indigo-800 no-underline">
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {/* 로고 이미지 */}
             <img
               src="/Temuflow-removebg-preview.png" // public 폴더 내 이미지 경로
               alt="Temu Overflow Logo"
-              style={{ height: 40, marginRight: 10 }}
+              className="mr-2 h-10"
             />
-
-            {/* 브랜드 텍스트 */}
             <Typography
               variant="h6"
               component="div"
@@ -32,33 +25,32 @@ const Navbar: React.FC = () => {
             </Typography>
           </Box>
         </Link>
-
-        <ul className="nav-menu">
-          <li className="nav-item">
+        <ul className="flex space-x-4">
+          <li>
             <Link
               to="/posts"
-              className="nav-link">
+              className="text-gray-700 hover:text-indigo-800">
               에러 공유 게시판
             </Link>
           </li>
-          <li className="nav-item">
+          <li>
             <Link
               to="/chat"
-              className="nav-link">
+              className="text-gray-700 hover:text-indigo-800">
               에러 해결 챗봇
             </Link>
           </li>
-          <li className="nav-item">
+          <li>
             <Link
               to="/todayError"
-              className="nav-link">
+              className="text-gray-700 hover:text-indigo-800">
               오늘의 에러
             </Link>
           </li>
-          <li className="nav-item">
+          <li>
             <Link
               to="/login"
-              className="nav-button">
+              className="rounded bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700">
               Login
             </Link>
           </li>
