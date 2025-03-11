@@ -1,4 +1,4 @@
-import { Post } from '../types/Post'
+// import { Post } from '../types/Post'
 
 export interface Post {
   id: number
