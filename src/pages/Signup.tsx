@@ -7,7 +7,7 @@ const Signup = () => {
     nickname: '',
     email: '',
     password: '',
-    profile_image: ''
+    profileImage: ''
   })
   const [error, setError] = useState('')
   const [imageFile, setImageFile] = useState<File | null>(null)
@@ -27,27 +27,47 @@ const Signup = () => {
     e.preventDefault()
     setError('')
 
+    // try {
+    //   let imageUrl = form.profileImage
+
+    //   if (imageFile) {
+    //     const formData = new FormData()
+    //     formData.append('file', imageFile)
+
+    //     const uploadResponse = await fetch('YOUR_IMAGE_UPLOAD_API_ENDPOINT', {
+    //       method: 'POST',
+    //       body: formData
+    //     })
+
+    //     if (!uploadResponse.ok) {
+    //       throw new Error('이미지 업로드 실패')
+    //     }
+
+    //     const uploadData = await uploadResponse.json()
+    //     imageUrl = uploadData.url
+    //   }
+
+    //   const data = await signup({ ...form, profileImage: imageUrl })
+    //   localStorage.setItem('access_token', data.access_token)
+    //   navigate('/login')
+    // } catch (err) {
+    //   setError(err instanceof Error ? err.message : '알 수 없는 오류')
+    // }
     try {
-      let imageUrl = form.profile_image_url
+      const formData = new FormData()
+      formData.append('nickname', form.nickname)
+      formData.append('email', form.email)
+      formData.append('password', form.password)
 
       if (imageFile) {
-        const formData = new FormData()
-        formData.append('file', imageFile)
-
-        const uploadResponse = await fetch('YOUR_IMAGE_UPLOAD_API_ENDPOINT', {
-          method: 'POST',
-          body: formData
-        })
-
-        if (!uploadResponse.ok) {
-          throw new Error('이미지 업로드 실패')
-        }
-
-        const uploadData = await uploadResponse.json()
-        imageUrl = uploadData.url
+        formData.append('profileImage', imageFile) // 파일 추가
       }
 
-      const data = await signup({ ...form, profile_image_url: imageUrl })
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value)
+      }
+
+      const data = await signup(formData) // API 호출
       localStorage.setItem('access_token', data.access_token)
       navigate('/login')
     } catch (err) {

@@ -4,12 +4,23 @@ export const signup = async (form: {
   nickname: string
   email: string
   password: string
-  profile_image_url?: string
+  profileImage?: File
 }) => {
-  const response = await fetch(`${API_BASE_URL}/api/register`, {
+  const formData = new FormData() // FormData 객체 생성
+
+  formData.append('nickname', form.nickname)
+  formData.append('email', form.email)
+  formData.append('password', form.password)
+
+  if (form.profileImage) {
+    formData.append('profile_image', form.profileImage) // 이미지 파일 추가
+  }
+
+  const response = await fetch(`${API_BASE_URL}/register`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(form)
+    // headers: { 'Content-Type': 'multipart/form-data' },
+    // body: JSON.stringify(form)
+    body: formData
   })
 
   if (!response.ok) {
@@ -24,10 +35,11 @@ export const login = async (credentials: {
   email: string
   password: string
 }) => {
-  const response = await fetch(`${API_BASE_URL}/api/login`, {
+  const response = await fetch(`${API_BASE_URL}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(credentials)
+    // credentials: 'include'
   })
 
   if (!response.ok) {
