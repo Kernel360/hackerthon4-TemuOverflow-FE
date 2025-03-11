@@ -36,13 +36,15 @@ export const signup = async (formData: FormData) => {
     body: formData
   })
 
-  // const token = response.headers.get('Authorization')
-  // if (!response.ok || !token) {
-  if (!response.ok) {
+  const token = response.headers.get('Authorization')
+  if (!response.ok || !token) {
+    // if (!response.ok) {
     const data = await response.json()
     throw new Error(data.message || '회원가입 실패')
   }
-  // localStorage.setItem('access_token', token)
+  console.log('token:', token)
+
+  localStorage.setItem('access_token', token)
 
   return response.json()
 }
@@ -63,4 +65,32 @@ export const login = async (credentials: {
   }
   localStorage.setItem('access_token', token)
   return response.json()
+}
+
+// 토큰 확인 함수
+export const checkAuth = () => {
+  const token = localStorage.getItem('access_token')
+  if (!token) {
+    // 토큰이 없으면 로그인 페이지로 리디렉션하거나 적절한 처리
+    // navigate('/login');
+    console.warn('인증 토큰이 없습니다. 로그인이 필요할 수 있습니다.')
+  }
+  return !!token
+}
+
+// 인증 토큰을 가져오는 함수
+export const getAuthToken = (): string | null => {
+  return localStorage.getItem('access_token')
+}
+
+// 인증 헤더 생성 함수
+export const createAuthHeader = (): HeadersInit => {
+  const token = getAuthToken()
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json'
+  }
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`
+  }
+  return headers
 }
