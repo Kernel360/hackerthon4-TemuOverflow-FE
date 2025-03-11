@@ -23,12 +23,12 @@ const PostListPage = () => {
 
   // 게시글 클릭 핸들러
   const handlePostClick = (postId: number) => {
-    navigate(`/posts/${postId}`)
+    navigate(`/post/${postId}`)
   }
 
   // 새 게시글 작성 페이지로 이동
   const navigateToCreatePost = () => {
-    navigate('/posts/new')
+    navigate('/post/new')
   }
 
   return (

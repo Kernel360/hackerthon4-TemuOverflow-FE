@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const PostCreateForm = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -32,6 +34,7 @@ const PostCreateForm = () => {
 
     const data = await response.json()
     console.log('Post created successfully:', data)
+    navigate('/posts')
   }
 
   return (

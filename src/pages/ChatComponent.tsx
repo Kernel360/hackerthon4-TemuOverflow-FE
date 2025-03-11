@@ -1,11 +1,167 @@
 import React, { useState, useRef, useEffect } from 'react'
-import './ChatComponent.css'
+import { styled } from '@mui/material/styles'
 
 interface Message {
   text: string
   isUser: boolean
   isError: boolean
 }
+
+// 스타일드 컴포넌트 정의
+const ChatContainerStyled = styled('div')({
+  width: '100%',
+  maxWidth: '800px',
+  backgroundColor: 'white',
+  borderRadius: '12px',
+  boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)',
+  display: 'flex',
+  flexDirection: 'column',
+  overflow: 'hidden',
+  height: '90vh',
+  margin: '0 auto',
+  fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
+  '& *': {
+    boxSizing: 'border-box',
+    margin: 0,
+    padding: 0
+  },
+  '@media (max-width: 768px)': {
+    height: '100vh',
+    borderRadius: 0
+  }
+})
+
+const ChatHeader = styled('div')({
+  backgroundColor: '#5c6bc0',
+  color: 'white',
+  padding: '20px',
+  textAlign: 'center',
+  '& h1': {
+    fontSize: '1.5rem',
+    fontWeight: 600
+  }
+})
+
+const ChatMessages = styled('div')({
+  flex: 1,
+  overflowY: 'auto',
+  padding: '20px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '16px'
+})
+
+const MessageDiv = styled('div')<{ isuser: string; iserror: string }>(
+  ({ isuser, iserror }) => ({
+    display: 'flex',
+    maxWidth: '80%',
+    alignSelf: isuser === 'true' ? 'flex-end' : 'flex-start',
+    '@media (max-width: 768px)': {
+      maxWidth: '90%'
+    },
+    '& .message-content': {
+      padding: '12px 16px',
+      borderRadius: '18px',
+      fontSize: '0.95rem',
+      lineHeight: 1.4,
+      backgroundColor:
+        iserror === 'true'
+          ? '#ffebee'
+          : isuser === 'true'
+            ? '#5c6bc0'
+            : '#f1f0f0',
+      color:
+        iserror === 'true' ? '#c62828' : isuser === 'true' ? 'white' : '#333',
+      borderBottomRightRadius: isuser === 'true' ? '5px' : '18px',
+      borderBottomLeftRadius: isuser === 'true' ? '18px' : '5px',
+      border: iserror === 'true' ? '1px solid #ef9a9a' : 'none'
+    }
+  })
+)
+
+const TypingIndicator = styled('div')({
+  display: 'flex',
+  padding: '12px 16px',
+  backgroundColor: '#f1f0f0',
+  borderRadius: '18px',
+  borderBottomLeftRadius: '5px',
+  width: 'fit-content',
+  alignSelf: 'flex-start',
+  '& span': {
+    height: '8px',
+    width: '8px',
+    backgroundColor: '#888',
+    borderRadius: '50%',
+    margin: '0 2px',
+    display: 'inline-block',
+    opacity: 0.4
+  },
+  '& span:nth-of-type(1)': {
+    animation: 'pulse 1s infinite'
+  },
+  '& span:nth-of-type(2)': {
+    animation: 'pulse 1s infinite 0.2s'
+  },
+  '& span:nth-of-type(3)': {
+    animation: 'pulse 1s infinite 0.4s'
+  },
+  '@keyframes pulse': {
+    '0%': {
+      opacity: 0.4,
+      transform: 'scale(1)'
+    },
+    '50%': {
+      opacity: 1,
+      transform: 'scale(1.2)'
+    },
+    '100%': {
+      opacity: 0.4,
+      transform: 'scale(1)'
+    }
+  }
+})
+
+const ChatInput = styled('div')({
+  padding: '16px',
+  borderTop: '1px solid #eee',
+  backgroundColor: 'white',
+  '& form': {
+    display: 'flex',
+    gap: '10px'
+  },
+  '& input': {
+    flex: 1,
+    padding: '12px 16px',
+    border: '1px solid #ddd',
+    borderRadius: '24px',
+    fontSize: '0.95rem',
+    outline: 'none',
+    transition: 'border-color 0.2s',
+    '&:focus': {
+      borderColor: '#5c6bc0'
+    },
+    '&:disabled': {
+      backgroundColor: '#f5f5f5'
+    }
+  },
+  '& button': {
+    backgroundColor: '#5c6bc0',
+    color: 'white',
+    border: 'none',
+    borderRadius: '24px',
+    padding: '12px 24px',
+    fontSize: '0.95rem',
+    cursor: 'pointer',
+    transition: 'background-color 0.2s',
+    '&:hover': {
+      backgroundColor: '#4a5ab9'
+    },
+    '&:disabled': {
+      backgroundColor: '#bdbdbd',
+      cursor: 'not-allowed'
+    }
+  }
+})
 
 const ChatComponent: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
@@ -110,40 +266,34 @@ const ChatComponent: React.FC = () => {
   }
 
   return (
-    <div className="chat-container">
-      <div className="chat-header">
+    <ChatContainerStyled>
+      <ChatHeader>
         <h1>Error Fixer Bot</h1>
-      </div>
+      </ChatHeader>
 
-      <div
-        className="chat-messages"
-        ref={chatMessagesRef}>
+      <ChatMessages ref={chatMessagesRef}>
         {messages.map((msg, index) => (
-          <div
+          <MessageDiv
             key={index}
-            className={`message ${msg.isUser ? 'user' : 'bot'} ${msg.isError ? 'error' : ''}`}>
+            isuser={msg.isUser.toString()}
+            iserror={msg.isError.toString()}>
             <div className="message-content">{msg.text}</div>
-          </div>
+          </MessageDiv>
         ))}
 
         {isLoading && (
-          <div
-            className="typing-indicator"
-            id="typing-indicator">
+          <TypingIndicator>
             <span></span>
             <span></span>
             <span></span>
-          </div>
+          </TypingIndicator>
         )}
-      </div>
+      </ChatMessages>
 
-      <div className="chat-input">
-        <form
-          id="chat-form"
-          onSubmit={handleSubmit}>
+      <ChatInput>
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
-            id="message-input"
             ref={messageInputRef}
             value={inputMessage}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -156,13 +306,12 @@ const ChatComponent: React.FC = () => {
           />
           <button
             type="submit"
-            id="send-button"
             disabled={isLoading}>
             전송
           </button>
         </form>
-      </div>
-    </div>
+      </ChatInput>
+    </ChatContainerStyled>
   )
 }
 
