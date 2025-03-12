@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
 
 interface Message {
@@ -169,6 +170,7 @@ const ChatComponent: React.FC = () => {
   ])
   const [inputMessage, setInputMessage] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const navigate = useNavigate()
 
   const chatMessagesRef = useRef<HTMLDivElement>(null)
   const messageInputRef = useRef<HTMLInputElement>(null)
@@ -191,6 +193,14 @@ const ChatComponent: React.FC = () => {
   useEffect(() => {
     messageInputRef.current?.focus()
   }, [])
+
+  // 로그인 상태 확인
+  useEffect(() => {
+    const token = localStorage.getItem('access_token')
+    if (!token) {
+      navigate('/login')
+    }
+  }, [navigate])
 
   // Claude API에 메시지를 전송하는 함수
   const sendToClaude = async (message: string): Promise<string> => {
