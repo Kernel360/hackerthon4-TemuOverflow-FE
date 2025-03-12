@@ -20,7 +20,6 @@ const Login = () => {
 
     try {
       await login(form)
-      localStorage.setItem('access_token', 'your-token') // 로그인 성공 시 토큰 저장
       navigate('/')
       window.location.reload() // 상태 업데이트를 위해 페이지 새로고침
     } catch (err) {
