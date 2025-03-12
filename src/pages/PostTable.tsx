@@ -7,7 +7,7 @@ interface PostTableProps {
   handlePostClick: (postId: number) => void
 }
 
-const DEFAULT_PROFILE_IMAGE = '/public/blank-profile.webp'
+const DEFAULT_PROFILE_IMAGE = '/blank-profile.webp'
 
 const PostTable: React.FC<PostTableProps> = ({
   posts,

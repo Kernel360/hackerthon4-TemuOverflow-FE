@@ -45,7 +45,7 @@ export default function PostDetail() {
   const [editPostContent, setEditPostContent] = useState<string>('')
 
   const token = localStorage.getItem('access_token') || ''
-  const DEFAULT_PROFILE_IMAGE = '/public/blank-profile.webp'
+  const DEFAULT_PROFILE_IMAGE = '/blank-profile.webp'
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
   // 현재 로그인한 사용자 정보 가져오기
