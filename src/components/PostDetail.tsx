@@ -86,7 +86,8 @@ export default function PostDetail() {
           }
         )
 
-        if (!postResponse.ok) throw new Error('게시글을 불러올 수 없습니다.')
+        if (!postResponse.ok)
+          throw new Error('게시글을 불러올 수 없습니다. 로그인 해주세요.')
         const postData: Post = await postResponse.json()
         console.log('받아온 게시글 데이터:', postData)
         setPost(postData)
@@ -338,54 +339,64 @@ export default function PostDetail() {
   // ✅ 게시글 해결 상태 변경 함수
   async function handleToggleSolved() {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/article/change-status/${postId}`, {
-        method: "PATCH",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/api/article/change-status/${postId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
 
-      if (!response.ok) throw new Error("상태 변경 실패");
-      
+      if (!response.ok) throw new Error('상태 변경 실패')
+
       // 상태 변경 응답 기다리기
-      const statusResponse = await response.json();
-      
+      const statusResponse = await response.json()
+
       // 임시로 상태 먼저 변경
-      setPost(prev => prev ? { ...prev, solved: statusResponse.solved } : prev);
+      setPost(prev =>
+        prev ? { ...prev, solved: statusResponse.solved } : prev
+      )
 
       // 약간의 딜레이 후 게시글 다시 불러오기
       setTimeout(async () => {
-        const postResponse = await fetch(`${API_BASE_URL}/api/article/${postId}`, {
-          method: "GET",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const postResponse = await fetch(
+          `${API_BASE_URL}/api/article/${postId}`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          }
+        )
 
-        if (!postResponse.ok) throw new Error("게시글을 불러올 수 없습니다.");
-        
-        const updatedPost = await postResponse.json();
-        setPost(updatedPost);
-      }, 500);
+        if (!postResponse.ok)
+          throw new Error('게시글을 불러올 수 없습니다. 로그인 해주세요.')
+
+        const updatedPost = await postResponse.json()
+        setPost(updatedPost)
+      }, 500)
     } catch (error) {
-      console.error("게시글 상태 변경 오류:", error);
+      console.error('게시글 상태 변경 오류:', error)
     }
   }
 
   if (loading) return <p className="text-center text-gray-500">로딩 중...</p>
   if (error) return <p className="text-center text-red-500">{error}</p>
-  if (!post) return <p className="text-center text-gray-500">게시글이 없습니다.</p>
+  if (!post)
+    return <p className="text-center text-gray-500">게시글이 없습니다.</p>
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <div className="mx-auto max-w-2xl rounded-lg bg-white p-6 shadow-lg">
       {/* 📌 게시글 정보 */}
       <div className="flex items-center gap-4 border-b pb-4">
         <img
           src={post.userProfileImageUrl || DEFAULT_PROFILE_IMAGE}
           alt="프로필"
-          className="w-12 h-12 rounded-full object-cover ring-2 ring-indigo-100"
-          onError={(e) => {
+          className="h-12 w-12 rounded-full object-cover ring-2 ring-indigo-100"
+          onError={e => {
             const target = e.target as HTMLImageElement
             target.src = DEFAULT_PROFILE_IMAGE
           }}
@@ -406,23 +417,22 @@ export default function PostDetail() {
                 setEditPostTitle(post.title)
                 setEditPostContent(post.content)
               }}
-              className="px-4 py-2 text-blue-500 hover:text-blue-600 transition-colors"
-            >
+              className="px-4 py-2 text-blue-500 transition-colors hover:text-blue-600">
               수정
             </button>
             <button
               onClick={handleDeletePost}
-              className="px-4 py-2 text-red-500 hover:text-red-600 transition-colors"
-            >
+              className="px-4 py-2 text-red-500 transition-colors hover:text-red-600">
               삭제
             </button>
           </div>
         )}
-        <span className={`px-3 py-1 rounded-full text-sm ${
-          post.solved 
-            ? 'bg-indigo-100 text-indigo-800' 
-            : 'bg-yellow-100 text-yellow-800'
-        }`}>
+        <span
+          className={`rounded-full px-3 py-1 text-sm ${
+            post.solved
+              ? 'bg-indigo-100 text-indigo-800'
+              : 'bg-yellow-100 text-yellow-800'
+          }`}>
           {post.solved ? '해결됨' : '미해결'}
         </span>
       </div>
@@ -463,7 +473,7 @@ console.log('Hello World');
           <div className="mt-6">
             <h1 className="text-3xl font-bold text-indigo-600">{post.title}</h1>
           </div>
-          <div className="mt-4 text-gray-700 text-lg leading-relaxed whitespace-pre-line">
+          <div className="mt-4 text-lg leading-relaxed whitespace-pre-line text-gray-700">
             <ReactMarkdown
               components={{
                 code: (props: any) => {
@@ -491,25 +501,26 @@ console.log('Hello World');
       )}
 
       <div className="mt-6 flex items-center gap-4">
-        <button 
-          onClick={handleLikePost} 
-          className={`px-6 py-2 bg-gradient-to-r ${
+        <button
+          onClick={handleLikePost}
+          className={`bg-gradient-to-r px-6 py-2 ${
             post.likedByCurrentUser
-              ? 'from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600' 
+              ? 'from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600'
               : 'from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600'
-          } text-white rounded-full transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center gap-2 text-lg`}
-        >
-          <span className="text-2xl">{post.likedByCurrentUser ? '❤️' : '🤍'}</span> {post.likeCount}
+          } flex transform items-center gap-2 rounded-full text-lg text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg`}>
+          <span className="text-2xl">
+            {post.likedByCurrentUser ? '❤️' : '🤍'}
+          </span>{' '}
+          {post.likeCount}
         </button>
         {currentUserId === post.userId && (
           <button
             onClick={handleToggleSolved}
-            className={`px-6 py-2 rounded-full transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg ${
+            className={`transform rounded-full px-6 py-2 shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg ${
               post.solved
                 ? 'bg-gradient-to-r from-indigo-400 to-indigo-500 hover:from-indigo-500 hover:to-indigo-600'
                 : 'bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700'
-            } text-white`}
-          >
+            } text-white`}>
             {post.solved ? '미해결로 변경' : '해결 완료'}
           </button>
         )}
@@ -527,17 +538,21 @@ console.log('Hello World');
         {/* 📌 댓글 리스트 */}
         <div className="mt-4 space-y-4">
           {comments.length === 0 ? (
-            <p className="text-gray-500 text-center py-8 bg-gray-50 rounded-lg">아직 댓글이 없습니다.</p>
+            <p className="rounded-lg bg-gray-50 py-8 text-center text-gray-500">
+              아직 댓글이 없습니다.
+            </p>
           ) : (
-            comments.map((comment) => (
-              <div key={comment.id} className="p-4 border rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
+            comments.map(comment => (
+              <div
+                key={comment.id}
+                className="rounded-lg border bg-gray-50 p-4 transition-colors hover:bg-gray-100">
                 {/* 댓글 작성자 정보 */}
                 <div className="mb-2 flex items-center gap-3">
                   <img
                     src={comment.userProfileImageUrl || DEFAULT_PROFILE_IMAGE}
                     alt="프로필"
                     className="h-8 w-8 rounded-full object-cover ring-2 ring-gray-100"
-                    onError={(e) => {
+                    onError={e => {
                       const target = e.target as HTMLImageElement
                       target.src = DEFAULT_PROFILE_IMAGE
                     }}
@@ -586,7 +601,7 @@ console.log('Hello World');
                 )}
 
                 {/* 삭제 & 수정 버튼 */}
-                <div className="flex gap-2 mt-2 ml-11">
+                <div className="mt-2 ml-11 flex gap-2">
                   {currentUserId === comment.userId && (
                     <>
                       <button
@@ -594,14 +609,12 @@ console.log('Hello World');
                           setEditingComment(comment.id)
                           setEditContent(comment.content)
                         }}
-                        className="text-sm text-blue-500 hover:text-blue-600 transition-colors"
-                      >
+                        className="text-sm text-blue-500 transition-colors hover:text-blue-600">
                         수정
                       </button>
                       <button
                         onClick={() => handleDeleteComment(comment.id)}
-                        className="text-sm text-red-500 hover:text-red-600 transition-colors"
-                      >
+                        className="text-sm text-red-500 transition-colors hover:text-red-600">
                         삭제
                       </button>
                     </>
