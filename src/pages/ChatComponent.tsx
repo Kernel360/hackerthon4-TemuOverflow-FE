@@ -8,6 +8,8 @@ interface Message {
   isError: boolean
 }
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+
 // 스타일드 컴포넌트 정의
 const ChatContainerStyled = styled('div')({
   width: '100%',
@@ -20,7 +22,8 @@ const ChatContainerStyled = styled('div')({
   overflow: 'hidden',
   height: '90vh',
   margin: '0 auto',
-  fontFamily: '"Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif',
+  fontFamily:
+    '"Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif',
   '& *': {
     boxSizing: 'border-box',
     margin: 0,
@@ -76,7 +79,11 @@ const MessageDiv = styled('div')<{ isuser: string; iserror: string }>(
             ? '#4568dc'
             : '#ffffff',
       color:
-        iserror === 'true' ? '#cf1322' : isuser === 'true' ? 'white' : '#2c3e50',
+        iserror === 'true'
+          ? '#cf1322'
+          : isuser === 'true'
+            ? 'white'
+            : '#2c3e50',
       borderBottomRightRadius: isuser === 'true' ? '6px' : '20px',
       borderBottomLeftRadius: isuser === 'true' ? '20px' : '6px',
       border: iserror === 'true' ? '1px solid #ffccc7' : 'none',
@@ -173,7 +180,7 @@ const ChatComponent: React.FC = () => {
   const chatMessagesRef = useRef<HTMLDivElement>(null)
   const messageInputRef = useRef<HTMLInputElement>(null)
 
-  const API_URL = 'http://13.125.174.224/api/chat'
+  const API_URL = `${API_BASE_URL}/api/chat`
 
   // 스크롤을 아래로 이동하는 함수
   const scrollToBottom = (): void => {
@@ -235,7 +242,10 @@ const ChatComponent: React.FC = () => {
     if (!message) return
 
     const startTime = new Date()
-    const startTimeStr = startTime.toLocaleTimeString() + '.' + startTime.getMilliseconds().toString().padStart(3, '0')
+    const startTimeStr =
+      startTime.toLocaleTimeString() +
+      '.' +
+      startTime.getMilliseconds().toString().padStart(3, '0')
     console.log(`사용자 메시지 전송 시간: ${startTimeStr}`)
 
     // 사용자 메시지 추가
@@ -253,11 +263,14 @@ const ChatComponent: React.FC = () => {
     try {
       // API로 메시지 전송
       const reply = await sendToClaude(message)
-      
+
       const endTime = new Date()
-      const endTimeStr = endTime.toLocaleTimeString() + '.' + endTime.getMilliseconds().toString().padStart(3, '0')
+      const endTimeStr =
+        endTime.toLocaleTimeString() +
+        '.' +
+        endTime.getMilliseconds().toString().padStart(3, '0')
       const responseTime = endTime.getTime() - startTime.getTime()
-      
+
       console.log(`봇 응답 수신 시간: ${endTimeStr}`)
       console.log(`응답 소요 시간: ${responseTime}ms`)
 

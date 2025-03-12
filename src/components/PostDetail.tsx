@@ -46,12 +46,13 @@ export default function PostDetail() {
 
   const token = localStorage.getItem('access_token') || ''
   const DEFAULT_PROFILE_IMAGE = '/public/blank-profile.webp'
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
   // 현재 로그인한 사용자 정보 가져오기
   useEffect(() => {
     async function fetchCurrentUser() {
       try {
-        const response = await fetch('http://13.125.174.224/api/user-info', {
+        const response = await fetch(`${API_BASE_URL}/api/user-info`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -74,7 +75,7 @@ export default function PostDetail() {
 
         // 📌 게시글 가져오기
         const postResponse = await fetch(
-          `http://13.125.174.224/api/article/${postId}`,
+          `${API_BASE_URL}/api/article/${postId}`,
           {
             method: 'GET',
             headers: {
@@ -91,7 +92,7 @@ export default function PostDetail() {
 
         // 📌 댓글 가져오기
         const commentsResponse = await fetch(
-          `http://13.125.174.224/api/reply/post/${postId}`,
+          `${API_BASE_URL}/api/reply/post/${postId}`,
           {
             method: 'GET',
             headers: {
@@ -120,7 +121,7 @@ export default function PostDetail() {
     if (!newComment.trim()) return
 
     try {
-      const response = await fetch('http://13.125.174.224/api/reply', {
+      const response = await fetch(`${API_BASE_URL}/api/reply`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -147,15 +148,12 @@ export default function PostDetail() {
     if (!window.confirm('정말 삭제하시겠습니까?')) return
 
     try {
-      const response = await fetch(
-        `http://13.125.174.224/api/reply/${commentId}`,
-        {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await fetch(`${API_BASE_URL}/api/reply/${commentId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
 
       if (!response.ok) throw new Error('댓글을 삭제할 수 없습니다.')
 
@@ -170,20 +168,17 @@ export default function PostDetail() {
     if (!editContent.trim()) return
 
     try {
-      const response = await fetch(
-        `http://13.125.174.224/api/reply/${commentId}`,
-        {
-          method: 'PUT',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            postId: Number(postId),
-            content: editContent
-          })
-        }
-      )
+      const response = await fetch(`${API_BASE_URL}/api/reply/${commentId}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          postId: Number(postId),
+          content: editContent
+        })
+      })
 
       if (!response.ok) throw new Error('댓글을 수정할 수 없습니다.')
 
@@ -206,7 +201,7 @@ export default function PostDetail() {
   // ✅ 게시글 좋아요 버튼 클릭
   async function handleLikePost() {
     try {
-      const response = await fetch(`http://13.125.174.224/api/like/article`, {
+      const response = await fetch(`${API_BASE_URL}/api/like/article`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -234,7 +229,7 @@ export default function PostDetail() {
   // ✅ 댓글 좋아요 버튼 클릭
   async function handleLikeComment(commentId: number) {
     try {
-      const response = await fetch(`http://13.125.174.224/api/like/reply`, {
+      const response = await fetch(`${API_BASE_URL}/api/like/reply`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -266,16 +261,13 @@ export default function PostDetail() {
   async function handleAIComment() {
     try {
       setIsGeneratingAI(true)
-      const response = await fetch(
-        `http://13.125.174.224/api/reply/ai/${postId}`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
+      const response = await fetch(`${API_BASE_URL}/api/reply/ai/${postId}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
         }
-      )
+      })
 
       if (!response.ok) throw new Error('AI 답변을 생성할 수 없습니다.')
 
@@ -299,20 +291,17 @@ export default function PostDetail() {
     if (!editPostTitle.trim() || !editPostContent.trim()) return
 
     try {
-      const response = await fetch(
-        `http://13.125.174.224/api/article/${postId}`,
-        {
-          method: 'PUT',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            title: editPostTitle,
-            content: editPostContent
-          })
-        }
-      )
+      const response = await fetch(`${API_BASE_URL}/api/article/${postId}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: editPostTitle,
+          content: editPostContent
+        })
+      })
 
       if (!response.ok) throw new Error('게시글을 수정할 수 없습니다.')
 
@@ -329,15 +318,12 @@ export default function PostDetail() {
     if (!window.confirm('정말 삭제하시겠습니까?')) return
 
     try {
-      const response = await fetch(
-        `http://13.125.174.224/api/article/${postId}`,
-        {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await fetch(`${API_BASE_URL}/api/article/${postId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
 
       if (!response.ok) throw new Error('게시글을 삭제할 수 없습니다.')
 
