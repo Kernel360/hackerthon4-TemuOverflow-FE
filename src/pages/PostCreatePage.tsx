@@ -16,9 +16,7 @@ const PostCreatePage = () => {
     <div className="mx-auto max-w-4xl p-6">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-indigo-800">
-            Create a New Post
-          </h1>
+          <h1 className="text-3xl font-bold text-indigo-800">글 작성하기</h1>
         </div>
         <PostCreateForm />
       </div>
