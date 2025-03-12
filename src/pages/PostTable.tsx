@@ -36,9 +36,9 @@ const PostTable: React.FC<PostTableProps> = ({
             {/* <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
               번호
             </th> */}
-            {/* <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
+            <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
               상태
-            </th> */}
+            </th>
             <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-indigo-800 uppercase">
               제목
             </th>
@@ -66,7 +66,7 @@ const PostTable: React.FC<PostTableProps> = ({
                 {/* <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
                   {post.id}
                 </td> */}
-                {/* <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-6 py-4 whitespace-nowrap">
                   <span
                     className={`inline-flex rounded-full px-2 text-xs leading-5 font-semibold ${
                       post.solved
@@ -75,7 +75,7 @@ const PostTable: React.FC<PostTableProps> = ({
                     }`}>
                     {post.solved ? '해결됨' : '미해결'}
                   </span>
-                </td> */}
+                </td>
                 <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-indigo-900">
                   {post.title}
                 </td>
