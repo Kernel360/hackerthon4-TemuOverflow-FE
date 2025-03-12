@@ -1,15 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Box, Typography } from '@mui/material'
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem('access_token')
+  )
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const token = localStorage.getItem('access_token')
-    setIsLoggedIn(!!token)
-  }, [])
 
   const handleLogout = () => {
     localStorage.removeItem('access_token')
@@ -67,14 +64,12 @@ const Navbar = () => {
               <button
                 onClick={handleLogout}
                 className="rounded bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700">
-                {/* className="h-9 w-20 rounded bg-indigo-600 px-4 text-white hover:bg-indigo-700"> */}
                 Logout
               </button>
             ) : (
               <Link
                 to="/login"
                 className="rounded bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700">
-                {/* className="h-9 w-20 rounded bg-indigo-600 px-4 text-white hover:bg-indigo-700"> */}
                 Login
               </Link>
             )}

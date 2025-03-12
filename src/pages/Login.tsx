@@ -21,6 +21,7 @@ const Login = () => {
     try {
       await login(form)
       navigate('/')
+      window.location.reload() // 상태 업데이트를 위해 페이지 새로고침
     } catch (err) {
       setError(err instanceof Error ? err.message : '로그인 실패')
     }

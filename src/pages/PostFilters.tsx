@@ -54,7 +54,7 @@ const PostFilters = ({
           type="text"
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
-          placeholder="제목 또는 작성자 검색..."
+          placeholder="제목 또는 내용 검색..."
           className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
         />
         <button
