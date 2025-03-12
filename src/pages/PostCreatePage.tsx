@@ -1,6 +1,17 @@
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import PostCreateForm from '../components/PostCreateForm'
 
 const PostCreatePage = () => {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const token = localStorage.getItem('access_token')
+    if (!token) {
+      navigate('/login')
+    }
+  }, [navigate])
+
   return (
     <div className="mx-auto max-w-4xl p-6">
       <div className="container mx-auto px-4 py-8">

@@ -25,7 +25,7 @@ const Navbar = () => {
           className="flex items-center text-indigo-800 no-underline">
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <img
-              src="/public/Temuflow-removebg-preview.png" // public 폴더 내 이미지 경로
+              src="/Temuflow-removebg-preview.png" // public 폴더 내 이미지 경로
               alt="Temu Overflow Logo"
               className="mr-2 h-10"
             />
@@ -36,7 +36,7 @@ const Navbar = () => {
                 fontWeight: 'bold',
                 color: '#48528b' /* indigo-800 */
               }}>
-              Temu Overflow
+              TemuOverflow
             </Typography>
           </Box>
         </Link>
@@ -66,13 +66,15 @@ const Navbar = () => {
             {isLoggedIn ? (
               <button
                 onClick={handleLogout}
-                className="rounded bg-indigo-600 px-3 py-2 text-white hover:bg-indigo-700">
+                className="rounded bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700">
+                {/* className="h-9 w-20 rounded bg-indigo-600 px-4 text-white hover:bg-indigo-700"> */}
                 Logout
               </button>
             ) : (
               <Link
                 to="/login"
                 className="rounded bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700">
+                {/* className="h-9 w-20 rounded bg-indigo-600 px-4 text-white hover:bg-indigo-700"> */}
                 Login
               </Link>
             )}
