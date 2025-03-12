@@ -170,17 +170,21 @@ export default function PostDetail() {
         },
         body: JSON.stringify({
           postId: Number(postId),
-          content: editContent, // ❌ userId 제거
+          content: editContent,
         }),
       });
 
       if (!response.ok) throw new Error("댓글을 수정할 수 없습니다.");
 
       const updatedComments = comments.map((comment) =>
-        comment.id === commentId ? { ...comment, content: editContent } : comment
+        comment.id === commentId ? { 
+          ...comment, 
+          content: editContent,
+          updatedAt: new Date().toISOString()
+        } : comment
       );
       setComments(updatedComments);
-      setEditingComment(null); // ✅ 수정 모드 종료
+      setEditingComment(null);
     } catch (error) {
       console.error("댓글 수정 오류:", error);
     }
@@ -261,6 +265,7 @@ export default function PostDetail() {
         ...aiComment,
         userNickname: "TemuFlow GPT",
         userProfileImageUrl: "/TemuFlow-GPT.png",
+        updatedAt: "-999999999-01-01T00:00:00"
       };
       setComments([...comments, commentWithUserInfo]);
     } catch (error) {
