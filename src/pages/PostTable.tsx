@@ -9,6 +9,20 @@ interface PostTableProps {
 
 const DEFAULT_PROFILE_IMAGE = '/blank-profile.webp'
 
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString)
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true
+  }
+  return new Intl.DateTimeFormat('ko-KR', options).format(date)
+}
+
 const PostTable: React.FC<PostTableProps> = ({
   posts,
   error,
@@ -74,7 +88,7 @@ const PostTable: React.FC<PostTableProps> = ({
                   {post.userNickname}
                 </td>
                 <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
-                  {post.createdAt}
+                  {formatDate(post.createdAt)}
                 </td>
                 {/* <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
                   {post.views}
