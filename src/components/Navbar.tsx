@@ -135,14 +135,14 @@ const Navbar = () => {
                   toggleMenu()
                 }}
                 className="w-full rounded bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700">
-                Logout
+                로그아웃
               </button>
             ) : (
               <Link
                 to="/login"
                 onClick={toggleMenu}
                 className="block w-full rounded bg-indigo-600 px-4 py-2 text-center text-white hover:bg-indigo-700">
-                Login
+                로그인
               </Link>
             )}
           </li>
