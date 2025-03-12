@@ -12,15 +12,15 @@ interface Message {
 const ChatContainerStyled = styled('div')({
   width: '100%',
   maxWidth: '800px',
-  backgroundColor: 'white',
-  borderRadius: '12px',
-  boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)',
+  backgroundColor: '#ffffff',
+  borderRadius: '20px',
+  boxShadow: '0 12px 28px rgba(0, 0, 0, 0.12)',
   display: 'flex',
   flexDirection: 'column',
   overflow: 'hidden',
   height: '90vh',
   margin: '0 auto',
-  fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
+  fontFamily: '"Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif',
   '& *': {
     boxSizing: 'border-box',
     margin: 0,
@@ -33,23 +33,25 @@ const ChatContainerStyled = styled('div')({
 })
 
 const ChatHeader = styled('div')({
-  backgroundColor: '#5c6bc0',
+  background: 'linear-gradient(135deg, #4568dc 0%, #b06ab3 100%)',
   color: 'white',
-  padding: '20px',
+  padding: '24px',
   textAlign: 'center',
   '& h1': {
     fontSize: '1.5rem',
-    fontWeight: 600
+    fontWeight: 600,
+    letterSpacing: '-0.02em'
   }
 })
 
 const ChatMessages = styled('div')({
   flex: 1,
   overflowY: 'auto',
-  padding: '20px',
+  padding: '24px',
   display: 'flex',
   flexDirection: 'column',
-  gap: '16px'
+  gap: '16px',
+  backgroundColor: '#f8f9fa'
 })
 
 const MessageDiv = styled('div')<{ isuser: string; iserror: string }>(
@@ -61,37 +63,41 @@ const MessageDiv = styled('div')<{ isuser: string; iserror: string }>(
       maxWidth: '90%'
     },
     '& .message-content': {
-      padding: '12px 16px',
-      borderRadius: '18px',
+      padding: '12px 18px',
+      borderRadius: '20px',
       fontSize: '0.95rem',
-      lineHeight: 1.4,
+      lineHeight: 1.5,
+      whiteSpace: 'pre-wrap',
+      wordBreak: 'break-word',
       backgroundColor:
         iserror === 'true'
-          ? '#ffebee'
+          ? '#fff2f0'
           : isuser === 'true'
-            ? '#5c6bc0'
-            : '#f1f0f0',
+            ? '#4568dc'
+            : '#ffffff',
       color:
-        iserror === 'true' ? '#c62828' : isuser === 'true' ? 'white' : '#333',
-      borderBottomRightRadius: isuser === 'true' ? '5px' : '18px',
-      borderBottomLeftRadius: isuser === 'true' ? '18px' : '5px',
-      border: iserror === 'true' ? '1px solid #ef9a9a' : 'none'
+        iserror === 'true' ? '#cf1322' : isuser === 'true' ? 'white' : '#2c3e50',
+      borderBottomRightRadius: isuser === 'true' ? '6px' : '20px',
+      borderBottomLeftRadius: isuser === 'true' ? '20px' : '6px',
+      border: iserror === 'true' ? '1px solid #ffccc7' : 'none',
+      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)'
     }
   })
 )
 
 const TypingIndicator = styled('div')({
   display: 'flex',
-  padding: '12px 16px',
-  backgroundColor: '#f1f0f0',
-  borderRadius: '18px',
-  borderBottomLeftRadius: '5px',
+  padding: '12px 18px',
+  backgroundColor: '#ffffff',
+  borderRadius: '20px',
+  borderBottomLeftRadius: '6px',
   width: 'fit-content',
   alignSelf: 'flex-start',
+  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
   '& span': {
     height: '8px',
     width: '8px',
-    backgroundColor: '#888',
+    backgroundColor: '#4568dc',
     borderRadius: '50%',
     margin: '0 2px',
     display: 'inline-block',
@@ -105,60 +111,52 @@ const TypingIndicator = styled('div')({
   },
   '& span:nth-of-type(3)': {
     animation: 'pulse 1s infinite 0.4s'
-  },
-  '@keyframes pulse': {
-    '0%': {
-      opacity: 0.4,
-      transform: 'scale(1)'
-    },
-    '50%': {
-      opacity: 1,
-      transform: 'scale(1.2)'
-    },
-    '100%': {
-      opacity: 0.4,
-      transform: 'scale(1)'
-    }
   }
 })
 
 const ChatInput = styled('div')({
-  padding: '16px',
-  borderTop: '1px solid #eee',
-  backgroundColor: 'white',
+  padding: '20px',
+  borderTop: '1px solid #edf2f7',
+  backgroundColor: '#ffffff',
   '& form': {
     display: 'flex',
-    gap: '10px'
+    gap: '12px'
   },
   '& input': {
     flex: 1,
-    padding: '12px 16px',
-    border: '1px solid #ddd',
-    borderRadius: '24px',
+    padding: '14px 20px',
+    border: '2px solid #e2e8f0',
+    borderRadius: '30px',
     fontSize: '0.95rem',
     outline: 'none',
-    transition: 'border-color 0.2s',
+    transition: 'all 0.2s ease',
     '&:focus': {
-      borderColor: '#5c6bc0'
+      borderColor: '#4568dc',
+      boxShadow: '0 0 0 3px rgba(69, 104, 220, 0.1)'
     },
     '&:disabled': {
-      backgroundColor: '#f5f5f5'
+      backgroundColor: '#f8f9fa',
+      borderColor: '#e2e8f0'
     }
   },
   '& button': {
-    backgroundColor: '#5c6bc0',
+    background: 'linear-gradient(135deg, #4568dc 0%, #b06ab3 100%)',
     color: 'white',
     border: 'none',
-    borderRadius: '24px',
-    padding: '12px 24px',
+    borderRadius: '30px',
+    padding: '14px 28px',
     fontSize: '0.95rem',
+    fontWeight: '600',
     cursor: 'pointer',
-    transition: 'background-color 0.2s',
+    transition: 'all 0.2s ease',
     '&:hover': {
-      backgroundColor: '#4a5ab9'
+      transform: 'translateY(-1px)',
+      boxShadow: '0 4px 12px rgba(69, 104, 220, 0.2)'
     },
     '&:disabled': {
-      backgroundColor: '#bdbdbd',
+      background: '#e2e8f0',
+      transform: 'none',
+      boxShadow: 'none',
       cursor: 'not-allowed'
     }
   }
@@ -236,6 +234,10 @@ const ChatComponent: React.FC = () => {
     const message = inputMessage.trim()
     if (!message) return
 
+    const startTime = new Date()
+    const startTimeStr = startTime.toLocaleTimeString() + '.' + startTime.getMilliseconds().toString().padStart(3, '0')
+    console.log(`사용자 메시지 전송 시간: ${startTimeStr}`)
+
     // 사용자 메시지 추가
     setMessages(prevMessages => [
       ...prevMessages,
@@ -251,6 +253,13 @@ const ChatComponent: React.FC = () => {
     try {
       // API로 메시지 전송
       const reply = await sendToClaude(message)
+      
+      const endTime = new Date()
+      const endTimeStr = endTime.toLocaleTimeString() + '.' + endTime.getMilliseconds().toString().padStart(3, '0')
+      const responseTime = endTime.getTime() - startTime.getTime()
+      
+      console.log(`봇 응답 수신 시간: ${endTimeStr}`)
+      console.log(`응답 소요 시간: ${responseTime}ms`)
 
       // 응답 메시지 추가
       setMessages(prevMessages => [
