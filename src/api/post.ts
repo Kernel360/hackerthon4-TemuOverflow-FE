@@ -62,7 +62,7 @@ export const fetchPosts = async (
 
     if (!response.ok) {
       // throw new Error('서버에서 데이터를 가져오는데 실패했습니다.')
-      throw new Error('게시글을 볼 수 없습니다. 로그인해주세요.')
+      throw new Error('게시글 목록 조회 중 오류 발생')
     }
 
     const data = await response.json()

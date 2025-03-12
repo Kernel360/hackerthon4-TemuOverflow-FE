@@ -38,7 +38,7 @@ const usePostList = () => {
       setTotalElements(result.totalElements)
     } catch (err) {
       //   setError('로그인해주세요.')
-      setError('게시글을 볼 수 없습니다. 로그인해주세요.')
+      setError('게시글 목록 조회 중 오류 발생')
       console.error('Error loading posts:', err)
     } finally {
       setIsLoading(false)
