@@ -71,7 +71,8 @@ const Signup = () => {
       await signup(formData) // API 호출
       // localStorage.setItem('access_token', data.access_token)
       // navigate('/login')
-      navigate('/posts')
+      navigate('/')
+      window.location.reload() // 상태 업데이트를 위해 페이지 새로고침
     } catch (err) {
       setError(err instanceof Error ? err.message : '알 수 없는 오류')
     }
