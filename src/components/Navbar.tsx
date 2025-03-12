@@ -36,7 +36,7 @@ const Navbar = () => {
                 fontWeight: 'bold',
                 color: '#48528b' /* indigo-800 */
               }}>
-              Temu Overflow
+              TemuOverflow
             </Typography>
           </Box>
         </Link>
@@ -66,13 +66,15 @@ const Navbar = () => {
             {isLoggedIn ? (
               <button
                 onClick={handleLogout}
-                className="rounded bg-indigo-600 px-3 py-2 text-white hover:bg-indigo-700">
+                className="rounded bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700">
+                {/* className="h-9 w-20 rounded bg-indigo-600 px-4 text-white hover:bg-indigo-700"> */}
                 Logout
               </button>
             ) : (
               <Link
                 to="/login"
                 className="rounded bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700">
+                {/* className="h-9 w-20 rounded bg-indigo-600 px-4 text-white hover:bg-indigo-700"> */}
                 Login
               </Link>
             )}
