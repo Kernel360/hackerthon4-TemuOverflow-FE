@@ -45,7 +45,7 @@ const PostCreateForm = () => {
         <label
           htmlFor="title"
           className="mb-2 font-semibold">
-          Title
+          제목
         </label>
         <input
           type="text"
@@ -59,7 +59,7 @@ const PostCreateForm = () => {
         <label
           htmlFor="content"
           className="mb-2 font-semibold">
-          Content
+          내용
         </label>
         <textarea
           id="content"
