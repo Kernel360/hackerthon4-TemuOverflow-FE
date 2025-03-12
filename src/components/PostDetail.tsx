@@ -399,7 +399,7 @@ console.log('Hello World');
       ) : (
         <>
           <h1 className="text-3xl font-bold text-indigo-600 mt-6">{post.title}</h1>
-          <div className="mt-4 text-gray-700 text-lg leading-relaxed">
+          <div className="mt-4 text-gray-700 text-lg leading-relaxed whitespace-pre-line">
             <ReactMarkdown
               components={{
                 code: (props: any) => {
@@ -418,7 +418,8 @@ console.log('Hello World');
                       {children}
                     </code>
                   );
-                }
+                },
+                p: ({ children }) => <p className="whitespace-pre-line">{children}</p>
               }}
             >
               {post.content}
