@@ -19,9 +19,7 @@ const Login = () => {
     setError('')
 
     try {
-      // const data = await login(form)
       await login(form)
-      //   localStorage.setItem('access_token', data.headers.get('Authorization'))
       navigate('/')
     } catch (err) {
       setError(err instanceof Error ? err.message : '로그인 실패')
@@ -57,6 +55,12 @@ const Login = () => {
           type="submit"
           className="w-full rounded bg-indigo-600 p-2 text-white hover:bg-indigo-400">
           로그인
+        </button>
+        <button
+          type="button"
+          onClick={() => navigate('/signup')}
+          className="mt-4 w-full rounded bg-gray-600 p-2 text-white hover:bg-gray-400">
+          회원가입
         </button>
       </form>
     </div>

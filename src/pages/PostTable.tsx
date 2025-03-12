@@ -7,6 +7,8 @@ interface PostTableProps {
   handlePostClick: (postId: number) => void
 }
 
+const DEFAULT_PROFILE_IMAGE = '/public/blank-profile.webp'
+
 const PostTable: React.FC<PostTableProps> = ({
   posts,
   error,
@@ -64,6 +66,11 @@ const PostTable: React.FC<PostTableProps> = ({
                   {post.title}
                 </td>
                 <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-700">
+                  <img
+                    src={post.userProfileImageUrl || DEFAULT_PROFILE_IMAGE}
+                    alt={post.userNickname}
+                    className="mr-2 inline-block h-6 w-6 rounded-full"
+                  />
                   {post.userNickname}
                 </td>
                 <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
